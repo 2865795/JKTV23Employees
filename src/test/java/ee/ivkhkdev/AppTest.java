@@ -1,7 +1,13 @@
 package ee.ivkhkdev;
 
+import ee.ivkhkdev.interfaces.EmployeeProvider;
 import ee.ivkhkdev.interfaces.Input;
+import ee.ivkhkdev.interfaces.InputEmployee;
 import ee.ivkhkdev.interfaces.impl.ConsoleInput;
+import ee.ivkhkdev.model.Address;
+import ee.ivkhkdev.model.Employee;
+import ee.ivkhkdev.model.Person;
+import ee.ivkhkdev.services.EmployeeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,12 +36,8 @@ class AppTest {
 
     @Test
     public void testRunExit() {
-//        InputStream in = new ByteArrayInputStream(input.getBytes());
-//        System.setIn(in);
-//        ByteArrayOutputStream out = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(out));
         when(mockInput.nextLine()).thenReturn("0");
-        App app = new App(mockInput);
+        App app = new App(mockInput, new EmployeeService(new InputEmployee()));
         app.run();
         String actualOut = mockOut.toString();
         System.setOut(new PrintStream(defaultOut));
@@ -43,29 +45,49 @@ class AppTest {
         String expectedOutFragment = "До свидания!";
         assertTrue(actualOut.contains(expectedOutFragment));
     }
-   // @Test
+    @Test
     public void testRunTask1() {
-
-        String input = "1\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-        App app = new App(mockInput);
+        when(mockInput.nextLine()).thenReturn("1","0");
+        InputEmployee inputEmployeeMock = mock(InputEmployee.class);
+        when(inputEmployeeMock.addEmployee(mockInput)).thenReturn(
+                new Employee(
+                        "Director",
+                        "3000",
+                        new Person(
+                                "Ivan",
+                                "Ivanov",
+                                new Address(
+                                        "Johvi",
+                                        "Kooli",
+                                        "32",
+                                        "3"
+                                )
+                        )
+                )
+        );
+        App app = new App(mockInput, new EmployeeService(new InputEmployee()));
         app.run();
-        String output = out.toString();
-        assertTrue(output.contains("Добавление пользователя"));
+        String actualOut = mockOut.toString();
+        System.setOut(new PrintStream(defaultOut));
+        System.out.println(mockOut.toString());
+        String expectedOutFragment1 = "Сотрудник добавлен.";
+        assertTrue(actualOut.contains(expectedOutFragment1));
+        String expectedOutFragment2 = "До свидания!";
+        assertTrue(actualOut.contains(expectedOutFragment2));
     }
-    // @Test
+    @Test
     public void testRunInvalidInput() {
-        String input = "\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-        App app = new App(mockInput);
+        when(mockInput.nextLine()).thenReturn("2","5", "0");
+        App app = new App(mockInput, new EmployeeService(new InputEmployee()));
         app.run();
-        String output = out.toString();
-        assertTrue(output.contains("Добавление пользователя"));
+        String actualOut = mockOut.toString();
+        System.setOut(new PrintStream(defaultOut));
+        System.out.println(mockOut.toString());
+        String expectedOutFragment3 = "Выбрана несуществующая задача!";
+        assertTrue(actualOut.contains(expectedOutFragment3));
+        String expectedOutFragment4 = "Выбрана несуществующая задача!";
+        assertTrue(actualOut.contains(expectedOutFragment4));
+        String expectedOutFragment5 = "До свидания!";
+        assertTrue(actualOut.contains(expectedOutFragment5));
     }
 }
