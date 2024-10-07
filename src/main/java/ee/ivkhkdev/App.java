@@ -1,15 +1,15 @@
 package ee.ivkhkdev;
 
 import ee.ivkhkdev.interfaces.Input;
-import ee.ivkhkdev.tools.ConsoleInput;
+import ee.ivkhkdev.interfaces.impl.ConsoleInput;
 
 import java.util.Scanner;
 
 public class App {
     public Input input;
 
-    public App() {
-        this.input = new ConsoleInput(new Scanner(System.in));
+    public App(Input input) {
+        this.input = input;
     }
 
     public void run() {
@@ -20,9 +20,7 @@ public class App {
             System.out.println("0. Выход из программы");
             System.out.println("1. Добавить пользователя");
             System.out.print("Введите номер задачи: ");
-            Scanner scanner = new Scanner(System.in);
-            int task = scanner.nextInt();
-            scanner.nextLine();
+            int task = Integer.parseInt(input.nextLine());
             switch (task) {
                 case 0:
                     System.out.println("Выход из программы");
