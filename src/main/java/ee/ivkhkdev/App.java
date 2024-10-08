@@ -1,17 +1,22 @@
 package ee.ivkhkdev;
 
+import ee.ivkhkdev.interfaces.EmployeeRepository;
 import ee.ivkhkdev.interfaces.Input;
 import ee.ivkhkdev.model.Employee;
 import ee.ivkhkdev.services.EmployeeService;
 
 public class App {
-    private final EmployeeService employeeService;
-    private Input input;
-    public static Employee[] employees = new Employee[100];
+    public static Employee[] employees;
+    private final EmployeeRepository employeeRepository;
 
-    public App(Input input, EmployeeService employeeService) {
+    private Input input;
+    private final EmployeeService employeeService;
+
+    public App(Input input, EmployeeService employeeService, EmployeeRepository employeeRepository) {
         this.input = input;
         this.employeeService = employeeService;
+        this.employeeRepository = employeeRepository;
+        employees = employeeRepository.loadEmployees();
     }
 
     public void run() {
@@ -30,7 +35,7 @@ public class App {
                     repeat = false;
                     break;
                 case 1:
-                    if(employeeService.createEmployee(input)) {
+                    if(employeeService.createEmployee(input, employeeRepository)) {
                         System.out.println("Сотрудник добавлен.");
                     };
                     break;

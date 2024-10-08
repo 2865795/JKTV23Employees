@@ -1,10 +1,10 @@
-package ee.ivkhkdev.interfaces;
+package ee.ivkhkdev.interfaces.impl;
 
 import ee.ivkhkdev.App;
+import ee.ivkhkdev.interfaces.EmployeeProvider;
 import ee.ivkhkdev.model.Address;
 import ee.ivkhkdev.model.Employee;
 import ee.ivkhkdev.interfaces.Input;
-import  ee.ivkhkdev.interfaces.impl.ConsoleInput;
 import ee.ivkhkdev.model.Person;
 
 
@@ -53,7 +53,7 @@ public class InputEmployee implements EmployeeProvider {
         for (int i=0; i < App.employees.length;i++){
             Employee employee = App.employees[i];
             if(employee != null){
-                System.out.printf("%d. %s %s. %s. %s%n",
+                System.out.printf("%d. %s %s%n %s%n %s%n",
                         i+1,
                         employee.getPerson().getFirstname(),
                         employee.getPerson().getLastname(),

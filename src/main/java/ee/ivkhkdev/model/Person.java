@@ -1,9 +1,10 @@
 package ee.ivkhkdev.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Person {
+public class Person implements Serializable {
     private UUID id;
     private String firstname;
     private String lastname;

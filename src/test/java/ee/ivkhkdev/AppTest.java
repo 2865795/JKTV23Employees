@@ -1,8 +1,8 @@
 package ee.ivkhkdev;
 
-import ee.ivkhkdev.interfaces.EmployeeProvider;
 import ee.ivkhkdev.interfaces.Input;
-import ee.ivkhkdev.interfaces.InputEmployee;
+import ee.ivkhkdev.interfaces.impl.EmployeeFileService;
+import ee.ivkhkdev.interfaces.impl.InputEmployee;
 import ee.ivkhkdev.interfaces.impl.ConsoleInput;
 import ee.ivkhkdev.model.Address;
 import ee.ivkhkdev.model.Employee;
@@ -37,7 +37,7 @@ class AppTest {
     @Test
     public void testRunExit() {
         when(mockInput.nextLine()).thenReturn("0");
-        App app = new App(mockInput, new EmployeeService(new InputEmployee()));
+        App app = new App(mockInput, new EmployeeService(new InputEmployee()), new EmployeeFileService());
         app.run();
         String actualOut = mockOut.toString();
         System.setOut(new PrintStream(defaultOut));
@@ -65,7 +65,7 @@ class AppTest {
                         )
                 )
         );
-        App app = new App(mockInput, new EmployeeService(new InputEmployee()));
+        App app = new App(mockInput, new EmployeeService(inputEmployeeMock), new EmployeeFileService());
         app.run();
         String actualOut = mockOut.toString();
         System.setOut(new PrintStream(defaultOut));
@@ -95,7 +95,7 @@ class AppTest {
                         )
                 )
         );
-        App app = new App(mockInput, new EmployeeService(inputEmployeeMock));
+        App app = new App(mockInput, new EmployeeService(inputEmployeeMock), new EmployeeFileService());
         app.run();
         String actualOut = mockOut.toString();
         System.setOut(new PrintStream(defaultOut));
@@ -106,7 +106,7 @@ class AppTest {
     @Test
     public void testRunInvalidInput() {
         when(mockInput.nextLine()).thenReturn("5", "0");
-        App app = new App(mockInput, new EmployeeService(new InputEmployee()));
+        App app = new App(mockInput, new EmployeeService(new InputEmployee()), new EmployeeFileService());
         app.run();
         String actualOut = mockOut.toString();
         System.setOut(new PrintStream(defaultOut));
