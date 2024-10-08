@@ -1,5 +1,6 @@
 package ee.ivkhkdev.interfaces;
 
+import ee.ivkhkdev.App;
 import ee.ivkhkdev.model.Address;
 import ee.ivkhkdev.model.Employee;
 import ee.ivkhkdev.interfaces.Input;
@@ -44,5 +45,25 @@ public class InputEmployee implements EmployeeProvider {
         employee.setPerson(person);
 
         return employee;
+    }
+
+    @Override
+    public void listEmployees() {
+        boolean hasEmployees = false;
+        for (int i=0; i < App.employees.length;i++){
+            Employee employee = App.employees[i];
+            if(employee != null){
+                System.out.printf("%d. %s %s. %s. %s%n",
+                        i+1,
+                        employee.getPerson().getFirstname(),
+                        employee.getPerson().getLastname(),
+                        employee.getPosition(),
+                        employee.getSalary());
+                hasEmployees = true;
+            }
+            if (!hasEmployees) {
+                System.out.println("Список сотрудников пуст.");
+            }
+        }
     }
 }

@@ -28,17 +28,8 @@ public class EmployeeService {
         return false;
     }
 
-    public void printEmployee(Input input) {
-        boolean hasEmployees = false;
-        for (int i = 0; i < App.employees.length; i++) {
-            if (App.employees[i] != null) {
-                System.out.println(App.employees[i]);
-                hasEmployees = true;
-            }
-        }
-
-        if (!hasEmployees) {
-            System.out.println("Список сотрудников пуст.");
-        }
+    public boolean printListEmployees(Input input) {
+        employeeProvider.listEmployees();
+        return true;
     }
 }

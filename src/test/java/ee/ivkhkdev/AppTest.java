@@ -95,12 +95,12 @@ class AppTest {
                         )
                 )
         );
-        App app = new App(mockInput, new EmployeeService(new InputEmployee()));
+        App app = new App(mockInput, new EmployeeService(inputEmployeeMock));
         app.run();
         String actualOut = mockOut.toString();
         System.setOut(new PrintStream(defaultOut));
         System.out.println(mockOut.toString());
-        String expectedOutFragment3 = "Список сотрудников: ";
+        String expectedOutFragment3 = "Конец списка.";
         assertTrue(actualOut.contains(expectedOutFragment3));
     }
     @Test

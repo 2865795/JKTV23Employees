@@ -36,7 +36,9 @@ public class App {
                     break;
                 case 2:
                     System.out.println("Список сотрудников: ");
-                    employeeService.printEmployee(input);
+                    if(employeeService.printListEmployees(input)){
+                        System.out.println("Конец списка.");
+                    };
                     break;
                 default:
                     System.out.println("Выбрана несуществующая задача!");
